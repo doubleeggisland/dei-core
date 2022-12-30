@@ -1,5 +1,7 @@
 package com.ioiox.dei.core.beans;
 
+import com.ioiox.dei.core.constant.DeiGlobalConstant;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -11,6 +13,7 @@ import java.util.stream.Stream;
  * Each Double Egg Island project related Entity should be inherited from this entity.
  */
 public class BaseDeiEntity {
+    public static final int INIT_VERSION_NUM = DeiGlobalConstant.ONE;
     private Long sid;
     private String createdBy;
     private Date createdTime;
