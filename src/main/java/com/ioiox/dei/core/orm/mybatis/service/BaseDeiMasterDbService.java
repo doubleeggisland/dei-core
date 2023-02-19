@@ -1,10 +1,12 @@
 package com.ioiox.dei.core.orm.mybatis.service;
 
 
+import com.ioiox.dei.core.constant.DeiGlobalConstant;
 import com.ioiox.dei.core.orm.mybatis.mapper.AbstractDeiMasterMapper;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class BaseDeiMasterDbService <T, M extends AbstractDeiMasterMapper<T>>
         implements IBaseDeiMasterDbService<T> {
@@ -50,6 +52,17 @@ public abstract class BaseDeiMasterDbService <T, M extends AbstractDeiMasterMapp
     }
 
     @Override
+    public int dbUpdateByParams(final Map<String, Object> params,
+                                final Map<String, Object> conditions) {
+        if (Objects.nonNull(conditions)
+                && !conditions.isEmpty()) {
+            for (final String conditionParamName : conditions.keySet()) {
+                params.put(String.format("%s%s", conditionParamName, DeiGlobalConstant.DB_UPDATE_CONDITION_PARAM_NAME_SUFFIX), conditions.get(conditionParamName));
+            }
+        }
+        return dbUpdateByParams(params);
+    }
+
     public int dbUpdateByParams(Map<String, Object> params) {
         final int updatedRows;
         try {
