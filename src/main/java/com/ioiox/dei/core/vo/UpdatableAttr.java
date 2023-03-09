@@ -46,6 +46,6 @@ public class UpdatableAttr<T> {
 
     @Override
     public String toString() {
-        return String.format("%s: %s => %s", attrName, formatOldVal(), formatNewVal());
+        return String.format("%s => %s", formatOldVal(), formatNewVal());
     }
 }
