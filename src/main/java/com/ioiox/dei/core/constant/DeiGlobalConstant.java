@@ -8,6 +8,8 @@ public class DeiGlobalConstant {
     public static final String FLAG_NO = "N";
     public static final String DB_UPDATE_CONDITION_PARAM_NAME_SUFFIX = "Condition";
 
+    public static final String SENSITIVE_INFO_PLACEHOLDER = "*****";
+
     public static final String SWITCH_ON_VALUE = "on";
     public static final String SWITCH_OFF_VALUE = "off";
     public static final String UNKNOWN = "unknown";

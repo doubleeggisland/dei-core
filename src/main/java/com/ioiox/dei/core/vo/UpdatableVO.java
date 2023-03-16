@@ -8,6 +8,10 @@ import java.util.*;
 
 public abstract class UpdatableVO {
 
+    private UpdatableAttr<String> updatedBy;
+
+    private UpdatableTimestampAttr updatedTime;
+
     public abstract Map<String, String> updateSummary();
 
     public static <T> boolean modified(final T oldVal, final T newVal) {
@@ -49,5 +53,21 @@ public abstract class UpdatableVO {
         final double oldValPrimitive = Objects.isNull(oldVal) ? 0.00D : oldVal.setScale(2, RoundingMode.HALF_UP).doubleValue();
         final double newValPrimitive = Objects.isNull(newVal) ? 0.00D : newVal.setScale(2, RoundingMode.HALF_UP).doubleValue();
         return oldValPrimitive != newValPrimitive;
+    }
+
+    public UpdatableAttr<String> getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(UpdatableAttr<String> updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public UpdatableTimestampAttr getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(UpdatableTimestampAttr updatedTime) {
+        this.updatedTime = updatedTime;
     }
 }

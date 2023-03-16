@@ -9,12 +9,20 @@ import java.util.Objects;
 public class UpdatableTimeAttr
         extends UpdatableAttr<Time> {
 
-    protected String formatOldVal() {
+    public UpdatableTimeAttr(final String attrName, final Time oldVal, final Time newVal) {
+        this(attrName, oldVal, newVal, false);
+    }
+
+    public UpdatableTimeAttr(final String attrName, final Time oldVal, final Time newVal, final boolean sensitive) {
+        super(attrName, oldVal, newVal, sensitive);
+    }
+
+    protected String formatNonsensitiveOldVal() {
         return Objects.isNull(getOldVal()) ?
                 DeiGlobalConstant.ZERO_LENGTH_STR : DateUtil.format(getOldVal(), DateUtil.PATTERN_HH_MM_SS);
     }
 
-    protected String formatNewVal() {
+    protected String formatNonsensitiveNewVal() {
         return Objects.isNull(getNewVal()) ?
                 DeiGlobalConstant.ZERO_LENGTH_STR : DateUtil.format(getNewVal(), DateUtil.PATTERN_HH_MM_SS);
     }
