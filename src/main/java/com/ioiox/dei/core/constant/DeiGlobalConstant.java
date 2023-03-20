@@ -23,4 +23,6 @@ public class DeiGlobalConstant {
     public static final int ONE_MILLION = 1000000;
     public static final int ONE_HUNDRED_MILLION = 100000000;
     public static final int MILLISECONDS_OF_A_DAY = 86400000;
+
+    public static final String DEI_SYS_PRJ_DUCS = "ducs";
 }

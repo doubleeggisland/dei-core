@@ -4,6 +4,7 @@ public abstract class SlaveStdDataVO {
     private Long id;
     private String lastModifiedBy;
     private Long lastModifiedTime;
+    private Integer versionNum;
 
     public Long getId() {
         return id;
@@ -27,5 +28,13 @@ public abstract class SlaveStdDataVO {
 
     public void setLastModifiedTime(Long lastModifiedTime) {
         this.lastModifiedTime = lastModifiedTime;
+    }
+
+    public Integer getVersionNum() {
+        return versionNum;
+    }
+
+    public void setVersionNum(Integer versionNum) {
+        this.versionNum = versionNum;
     }
 }
