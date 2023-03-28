@@ -19,18 +19,18 @@ public abstract class BaseDeiSlaveDbService<T, M extends AbstractDeiSlaveMapper<
     protected abstract String getDesc();
 
     @Override
-    public int countByParams(Map<String, Object> params) {
+    public int countByParams(final Map<String, Object> params) {
         final int count;
         try {
             count = getMapper().countByParams(params);
         } catch (Exception e) {
             throw new DeiDbException(String.format("统计%s记录数量出错, 错误信息: %s", getDesc(), e.getMessage()), e);
         }
-        return 0;
+        return count;
     }
 
     @Override
-    public List<T> findByParams(Map<String, Object> params) {
+    public List<T> findByParams(final Map<String, Object> params) {
         final List<T> entities;
         try {
             entities = getMapper().findByParams(params);
@@ -40,16 +40,25 @@ public abstract class BaseDeiSlaveDbService<T, M extends AbstractDeiSlaveMapper<
         return entities;
     }
 
+    protected List<T> findByParamsOnSelective(final Map<String, Object> params) {
+        final List<T> entities;
+        try {
+            entities = getMapper().findByParamsOnSelective(params);
+        } catch (Exception e) {
+            throw new DeiDbException(String.format("查询%s记录出错, 错误信息: %s", getDesc(), e.getMessage()), e);
+        }
+        return entities;
+    }
+
     @Override
-    public List<T> findByParams(Map<String, Object> params, List<String> showColumns) {
+    public List<T> findByParams(final Map<String, Object> params, final List<String> showColumns) {
         List<T> entities;
         if (Objects.isNull(showColumns) || showColumns.isEmpty()) {
             entities = findByParams(params);
         } else {
-            showColumns.forEach((showColumn) -> {
-                params.put(String.format("%sShow", showColumn), DeiGlobalConstant.FLAG_YES);
-            });
-            entities = getMapper().findByParamsOnSelective(params);
+            showColumns.forEach((showColumn) ->
+                    params.put(String.format("%sShow", showColumn), DeiGlobalConstant.FLAG_YES));
+            entities = findByParamsOnSelective(params);
         }
         return Objects.isNull(entities) || entities.isEmpty()
                 ? Collections.emptyList() : entities;
