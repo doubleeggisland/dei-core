@@ -3,7 +3,6 @@ package com.ioiox.dei.core.vo;
 import com.ioiox.dei.core.utils.DeiCollectionUtil;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -26,22 +25,22 @@ public abstract class StdDataQueryParam {
     }
 
     public Map<String, Object> queryParams() {
-        final Map<String, Object> queryParams = new HashMap<>();
+        final QueryConditionsHolder conditionsHolder = new QueryConditionsHolder();
         if (DeiCollectionUtil.isNotEmpty(pks)) {
             if (pks.size() > 1) {
-                queryParams.put("sids", pks);
+                conditionsHolder.addQueryCondition(QueryCondition.PARAM_NAME_PKS, pks);
             } else {
-                queryParams.put("sid", pks.get(0));
+                conditionsHolder.addQueryCondition(QueryCondition.PARAM_NAME_PK, pks.get(0));
             }
         }
         if (Objects.nonNull(pageNo) && Objects.nonNull(pageSize)) {
-            queryParams.put("offset", (pageNo - 1) * pageSize);
-            queryParams.put("limit", pageSize);
+            conditionsHolder.addQueryCondition(QueryCondition.PARAM_NAME_OFFSET, (pageNo - 1) * pageSize);
+            conditionsHolder.addQueryCondition(QueryCondition.PARAM_NAME_LIMIT, pageSize);
         }
         if (StringUtils.isNotBlank(orderByClause)) {
-            queryParams.put("orderByClause", orderByClause);
+            conditionsHolder.addQueryCondition(QueryCondition.PARAM_NAME_ORDER_BY_CLAUSE, orderByClause);
         }
-        return queryParams;
+        return conditionsHolder.queryParams();
     }
 
     public List<Long> getPks() {
