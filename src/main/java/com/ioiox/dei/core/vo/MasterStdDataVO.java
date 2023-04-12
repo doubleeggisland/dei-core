@@ -7,6 +7,10 @@ public abstract class MasterStdDataVO {
     private String updatedBy;
     private Long updatedTime;
 
+    public String uniqueKeyDigest() {
+        return null;
+    }
+
     public Long getId() {
         return id;
     }

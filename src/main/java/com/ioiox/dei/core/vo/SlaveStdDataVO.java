@@ -6,6 +6,10 @@ public abstract class SlaveStdDataVO {
     private Long lastModifiedTime;
     private Integer versionNum;
 
+    public String uniqueKeyDigest() {
+        return null;
+    }
+
     public Long getId() {
         return id;
     }

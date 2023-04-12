@@ -1,5 +1,7 @@
 package com.ioiox.dei.core.vo;
 
+import com.ioiox.dei.core.constant.DeiGlobalConstant;
+import com.ioiox.dei.core.utils.DateUtil;
 import com.ioiox.dei.core.utils.DeiCollectionUtil;
 
 import java.math.BigDecimal;
@@ -8,11 +10,33 @@ import java.util.*;
 
 public abstract class UpdatableVO {
 
-    private UpdatableAttr<String> updatedBy;
+    private Date lastModifiedTime;
 
-    private UpdatableTimestampAttr updatedTime;
+    private final List<String> updatedAttrNames = new LinkedList<>();
+
+    public boolean attrsUpdated() {
+        return DeiCollectionUtil.isNotEmpty(updatedAttrNames);
+    }
+
+    public boolean attrsNotUpdated() {
+        return DeiCollectionUtil.isEmpty(updatedAttrNames);
+    }
+
+    public boolean updated() {
+        return Objects.nonNull(lastModifiedTime)
+                || DeiCollectionUtil.isNotEmpty(updatedAttrNames);
+    }
+
+    public String formatLastModifiedTime() {
+        return Objects.isNull(lastModifiedTime)
+                ? DeiGlobalConstant.ZERO_LENGTH_STR : DateUtil.format(lastModifiedTime, DateUtil.PATTERN_YYYY_MM_DD_HH_MM_SS);
+    }
 
     public abstract Map<String, String> updateSummary();
+
+    public void addUpdatedAttrName(final String updatedAttrName) {
+        updatedAttrNames.add(updatedAttrName);
+    }
 
     public static <T> boolean modified(final T oldVal, final T newVal) {
         return !Objects.equals(oldVal, newVal);
@@ -55,19 +79,11 @@ public abstract class UpdatableVO {
         return oldValPrimitive != newValPrimitive;
     }
 
-    public UpdatableAttr<String> getUpdatedBy() {
-        return updatedBy;
+    public Date getLastModifiedTime() {
+        return lastModifiedTime;
     }
 
-    public void setUpdatedBy(UpdatableAttr<String> updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    public UpdatableTimestampAttr getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(UpdatableTimestampAttr updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setLastModifiedTime(final Date lastModifiedTime) {
+        this.lastModifiedTime = lastModifiedTime;
     }
 }

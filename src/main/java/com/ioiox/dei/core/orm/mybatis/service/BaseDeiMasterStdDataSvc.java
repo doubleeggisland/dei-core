@@ -43,16 +43,20 @@ public abstract class BaseDeiMasterStdDataSvc<
                                                final Long updatedTime) {
         example.setSid(existingStdVO.getId());
         example.setVersionNum(existingStdVO.getVersionNum());
-        if (StringUtils.isBlank(updatedBy)) {
-            example.setUpdatedBy(DeiGlobalConstant.DEI_SYS_PRJ_DUCS);
-        } else {
-            example.setUpdatedBy(updatedBy);
-        }
 
-        if (Objects.isNull(updatedTime)) {
-            example.setUpdatedTime(new Date(System.currentTimeMillis()));
-        } else {
-            example.setUpdatedTime(new Date(updatedTime));
+        if (StringUtils.isBlank(example.getUpdatedBy())) {
+            if (StringUtils.isBlank(updatedBy)) {
+                example.setUpdatedBy(DeiGlobalConstant.DEI_SYS_PRJ_DUCS);
+            } else {
+                example.setUpdatedBy(updatedBy);
+            }
+        }
+        if (Objects.isNull(example.getUpdatedTime())) {
+            if (Objects.isNull(updatedTime)) {
+                example.setUpdatedTime(new Date(System.currentTimeMillis()));
+            } else {
+                example.setUpdatedTime(new Date(updatedTime));
+            }
         }
     }
 
@@ -62,5 +66,11 @@ public abstract class BaseDeiMasterStdDataSvc<
 
     public abstract E toNewEntity(final T stdVO);
 
-    public abstract E toUpdatableObj(final UpdatableVO updatableVO);
+    public abstract E toUpdatableObj(final O updatableVO);
+
+    protected void assembleCommonAttrs(final BaseDeiEntity example, final UpdatableVO updatableVO) {
+        if (Objects.nonNull(updatableVO.getLastModifiedTime())) {
+            example.setUpdatedTime(updatableVO.getLastModifiedTime());
+        }
+    }
 }
