@@ -7,6 +7,8 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class DateUtil {
@@ -245,5 +247,28 @@ public class DateUtil {
             final String jobParam = String.format("{\"orderIds\": [%s]}", subOrderIdsStr);
             System.out.println(jobParam);
         }
+
+        System.out.println(processSmsTxtAfterTktIssued("出票成功：04月16日中国国航CA1369，北京首都国际机场T3-三亚凤凰国际机场T2，07:45起飞，11:40到达，经济舱。旅客 洪仁满(999-9281090178)票价900.00元，民航发展基金50.00元，燃油费60.00元，旅客 李惠宁(999-9281090180)票价900.00元，民航发展基金50.00元，燃油费60.00元，旅客 李迪(999-9281090179)票价900.00元，民航发展基金50.00元，燃油费60.00元，旅客 闫梦瑶(999-9281090181)票价900.00元，民航发展基金50.00元，燃油费60.00元。手提行李限1件5KG以内且体积不超过20×40×55cm，免费托运行李20KG。客票的有效期为一年，已为您自动关注行程，后续可查看行程动态。建议提前2小时到达机场办理乘机手续，因各地机场截载时间不一致，请自行了解当地机场截载时间，避免误机，如需帮助请联系客服。如您接到航班变动或取消的信息，可通过航班管家客户端查询动态或联系客服核实，请勿拨打陌生电话。"));
+        System.out.println(processSmsTxtAfterTktIssued("出票成功：04月14日中国国航CA1563，北京首都国际机场T3-上海虹桥国际机场T2，19:30起飞，21:50到达，经济舱。旅客 杨扉(999-9148661040)。手提行李限1件5KG以内且体积不超过20×40×55cm，免费托运行李20KG。客票的有效期为一年，已为您自动关注行程，后续可查看行程动态。建议提前2小时到达机场办理乘机手续，因各地机场截载时间不一致，请自行了解当地机场截载时间，避免误机，如需帮助请联系客服。如您接到航班变动或取消的信息，可通过航班管家客户端查询动态或联系客服核实，请勿拨打陌生电话。"));
+    }
+
+    private static String processSmsTxtAfterTktIssued(final String smsTxt) {
+        final Pattern patterOfTktNo = Pattern.compile("(\\d{3}-\\d{10})|(\\d{13})");
+        final Matcher tktNoMatter = patterOfTktNo.matcher(smsTxt);
+        String tktNo = null;
+        String processedSmsTxt = smsTxt;
+        while (tktNoMatter.find()) {
+            tktNo = tktNoMatter.group();
+        }
+        if (StringUtils.isNotBlank(tktNo)) {
+            final String tktNoPortion = String.format("(%s)", tktNo);
+            final String anotherTktNoPortion = String.format("（%s）", tktNo);
+            if (StringUtils.contains(smsTxt, tktNoPortion)) {
+                processedSmsTxt = String.format("%s。", StringUtils.substring(smsTxt, 0, StringUtils.indexOf(smsTxt, tktNoPortion) + tktNoPortion.length()));
+            } else if (StringUtils.contains(smsTxt, anotherTktNoPortion)) {
+                processedSmsTxt = String.format("%s。", StringUtils.substring(smsTxt, 0, StringUtils.indexOf(smsTxt, anotherTktNoPortion) + anotherTktNoPortion.length()));
+            }
+        }
+        return processedSmsTxt;
     }
 }

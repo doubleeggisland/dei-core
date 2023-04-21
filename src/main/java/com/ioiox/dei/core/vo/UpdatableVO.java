@@ -86,4 +86,8 @@ public abstract class UpdatableVO {
     public void setLastModifiedTime(final Date lastModifiedTime) {
         this.lastModifiedTime = lastModifiedTime;
     }
+
+    public void updateLastModifiedTime() {
+        setLastModifiedTime(new Date(System.currentTimeMillis()));
+    }
 }
