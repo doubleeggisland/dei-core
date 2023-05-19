@@ -85,7 +85,7 @@ public class DeiResponseData<T> {
             this.msg = msg;
             return this;
         }
-        public Builder<T> code(final T data) {
+        public Builder<T> data(final T data) {
             this.data = data;
             return this;
         }
