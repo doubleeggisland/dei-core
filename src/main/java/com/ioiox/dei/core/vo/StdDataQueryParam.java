@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public abstract class StdDataQueryParam {
     private List<Long> pks;
+    private Map<String, Object> otherQueryParams;
     private Integer pageNo;
     private Integer pageSize;
     private String orderByClause;
@@ -19,6 +20,7 @@ public abstract class StdDataQueryParam {
 
     public StdDataQueryParam(final StdDataQueryParamBuilder<? extends StdDataQueryParam> builder) {
         pks = builder.pks();
+        otherQueryParams = builder.otherQueryParams();
         pageNo = builder.pageNo();
         pageSize = builder.pageSize();
         orderByClause = builder.orderByClause();
@@ -40,7 +42,12 @@ public abstract class StdDataQueryParam {
         if (StringUtils.isNotBlank(orderByClause)) {
             conditionsHolder.addQueryCondition(QueryCondition.PARAM_NAME_ORDER_BY_CLAUSE, orderByClause);
         }
-        return conditionsHolder.queryParams();
+
+        final Map<String, Object> queryParams = conditionsHolder.queryParams();
+        if (DeiCollectionUtil.isNotEmpty(otherQueryParams)) {
+            queryParams.putAll(otherQueryParams);
+        }
+        return queryParams;
     }
 
     public List<Long> getPks() {

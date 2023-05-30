@@ -1,15 +1,21 @@
 package com.ioiox.dei.core.vo;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class StdDataQueryParamBuilder<T extends StdDataQueryParam> {
     private List<Long> pks;
+    private Map<String, Object> otherQueryParams;
     private Integer pageNo;
     private Integer pageSize;
     private String orderByClause;
 
     public StdDataQueryParamBuilder<T> pks(final List<Long> pks) {
         this.pks = pks;
+        return this;
+    }
+    public StdDataQueryParamBuilder<T> otherQueryParams(final Map<String, Object> otherQueryParams) {
+        this.otherQueryParams = otherQueryParams;
         return this;
     }
     public StdDataQueryParamBuilder<T> pageNo(final Integer pageNo) {
@@ -27,6 +33,10 @@ public abstract class StdDataQueryParamBuilder<T extends StdDataQueryParam> {
 
     public List<Long> pks() {
         return pks;
+    }
+
+    public Map<String, Object> otherQueryParams() {
+        return otherQueryParams;
     }
 
     public Integer pageNo() {
