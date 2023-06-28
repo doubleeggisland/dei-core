@@ -38,6 +38,14 @@ public abstract class UpdatableVO {
         updatedAttrNames.add(updatedAttrName);
     }
 
+    public static <T> boolean modified(final T oldVal, final T newVal, final Comparator<T> comparator) {
+        return comparator.compare(oldVal, newVal) != 0;
+    }
+
+    public static <T> boolean modified(final T oldVal, final T newVal, final DeiIdentical<T> identical) {
+        return !identical.same(oldVal, newVal);
+    }
+
     public static <T> boolean modified(final T oldVal, final T newVal) {
         return !Objects.equals(oldVal, newVal);
     }
@@ -89,5 +97,9 @@ public abstract class UpdatableVO {
 
     public void updateLastModifiedTime() {
         setLastModifiedTime(new Date(System.currentTimeMillis()));
+    }
+
+    public interface DeiIdentical<T> {
+        boolean same(final T first, final T second);
     }
 }
