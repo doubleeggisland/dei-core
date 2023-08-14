@@ -256,6 +256,9 @@ public class DateUtil {
 
         final List<String> intersection = Arrays.asList("applyOrderNo,","applyUser,","arrearsPay,","arrivalCityId,","arrivalDate,","assumeDept,","assumeOrg,","companion,","companionId,","companyRealRefund,","createBy,","currency,","deductibleTax,","departureCityId,","departureDate,","noTaxAmount,","orderDetailId,","orderNo,","orderStatus,","orderType,","payType,","paymentPrice,","paymentType,","personRealRefund,","preferentialAmount,","proposerId,","proposerName,","proposerPhone,","publicOrPrivate,","refundableAmount,","serviceFee,","sourceType,","supplier,","taxRate,","taxableAmount,","userId,","userName,","userPhone");
         System.out.println(JsonUtil.toJsonStr(DeiCollectionUtil.getDifference(hotelBizAttrs, intersection)));
+
+
+        System.out.println("       四川龙翔旅业.   服务有.  限责任公司".replaceAll("\\s+", ""));
     }
 
     private static String processSmsTxtAfterTktIssued(final String smsTxt) {
