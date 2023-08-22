@@ -1,6 +1,6 @@
 package com.ioiox.dei.core.orm.mybatis;
 
-import com.ioiox.dei.core.beans.BaseDeiEnum;
+import com.ioiox.dei.core.constant.BaseDeiEnum;
 
 public class EnumUtil {
     public static <T extends Enum<?> & BaseDeiEnum> T codeOf(Class<T> enumClass, String code) {

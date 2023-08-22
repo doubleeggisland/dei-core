@@ -1,5 +1,6 @@
 package com.ioiox.dei.core.beans;
 
+import com.ioiox.dei.core.constant.BaseDeiEnum;
 import com.ioiox.dei.core.constant.DeiGlobalConstant;
 
 import java.util.Date;

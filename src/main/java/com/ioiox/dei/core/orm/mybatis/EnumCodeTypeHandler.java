@@ -1,7 +1,7 @@
 package com.ioiox.dei.core.orm.mybatis;
 
 
-import com.ioiox.dei.core.beans.BaseDeiEnum;
+import com.ioiox.dei.core.constant.BaseDeiEnum;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 

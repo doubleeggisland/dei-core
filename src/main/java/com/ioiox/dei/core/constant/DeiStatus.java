@@ -1,24 +1,23 @@
 package com.ioiox.dei.core.constant;
 
-public enum Gender implements BaseDeiEnum {
-    MALE("male", "男"),
-    FEMALE("female", "女"),
-    UNKNOWN("unknown", "未知"),
+public enum DeiStatus implements BaseDeiEnum {
+    ENABLE("enable", "启用"),
+    DISABLE("disable", "禁用"),
+    DELETE("delete", "删除"),
     ;
+
     private final String code;
     private final String desc;
 
-    Gender(final String code, final String desc) {
+    DeiStatus(final String code, final String desc) {
         this.code = code;
         this.desc = desc;
     }
 
-    @Override
     public String getCode() {
         return code;
     }
 
-    @Override
     public String getDesc() {
         return desc;
     }
