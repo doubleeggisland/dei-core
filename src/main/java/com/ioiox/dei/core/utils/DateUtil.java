@@ -1,15 +1,14 @@
 package com.ioiox.dei.core.utils;
 
 import com.ioiox.dei.core.constant.DeiGlobalConstant;
-import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DateUtil {
     public static final String PATTERN_YYYY_MM_DD_SLIM = "yyyyMMdd";
@@ -237,47 +236,5 @@ public class DateUtil {
         System.out.println(format(givenTime(2022, 2, 1, 11, 23,45, 44), PATTERN_YYYY_MM_DD_HH_MM_SS));
 
         System.out.println(Time.valueOf("08:00:00").getTime());
-
-        final String orderIds = "TR22325235352018147,TR22327154556676439,TR22329090759279025,TR22329122359879255,TR22329154232729289,TR22330154814533407,TR22330185453954163,TR22330213725553314,TR22330213725618457,TR22330222920669310,TR22331143419888077,TR22331183034631143,TR22331210043692272,TR22331213128853391,TR22331220155920315,TR22331220155953496,TR22331231322426142,TR22331232015449161,TR22332180321768489,TR22332202815435342,TR22332202815490305,TR22333181350096257,TR22333213716927269,TR22334115942315372,TR22334174642369197,TR22334174642396172,TR22334174642425456,TR22334174642453355,TR22334233327293009,TR22334233327333143,TR22335171151227029,TR22335171151294421,TR22335171151392177,TR22335171151424230,TR22336104052241332,TR22336144232628105,TR22336144232661029,TR22336152208326229,TR22336224617727207,TR22337012042078327,TR22337012042106049,TR22337012042145063,TR22337012042173221,TR22337171140086416,TR22338193813621350,TR22339234155255194,TR22341085926380010,TR22341090121509266,TR22341093038245136,TR22343105011475373,TR22344013557946428,TR22344143953975017,TR22345194119499227,TR22345194119526124,TR22346195642949168,TR22346200224666470,TR22347013658780343,TR22347014943534243,TR22347042248499358,TR22347193817621316,TR22349125854032197,TR22350134056253024,TR22350184135409472,TR22353231742216067,TR22355090408819058,TR22355090408879142,TR22355141734469401,TR22355193840532203,TR22355194117606120,TR22358183118659264,TR22360172710473256,TR22360172710500261,TR22361222822272284,TR22363230552760291,TR22363230552785276,TR22364093721971397,TR22365200837323314,TR22365200837351301,TR22365200837391171,TR22365200954504470,TR22365200954536157,TR22365200954563127,TR23001203816403275,TR23001203816431465,TR23002162409741163,TR23003092138713013,TR23004223724293232,TR23005091710946252,TR23007003142031141,TR23007122227269140,TR23007170004178274,TR23008133917871397,TR23008133917899134,TR23012125807543310,TR23013222046615400,TR23014145535902402,TR23016110638752319,TR23017115542254196,TR23028123908425003,TR23031105935882199,TR23044224906066436,TR23044224906119215,TR23050121513335201,TR23050121513435124,TR23060194712377450,TR23080200322427486,TR23082191119674286";
-        final List<String> orderIdList = Arrays.asList(StringUtils.split(orderIds, ","));
-        final int count = orderIdList.size() % 20 == 0 ? orderIdList.size() / 20 : orderIdList.size() / 20 + 1;
-        for (int i = 0 ; i <  count ; i++) {
-            final List<String> subOrderIds = DeiCollectionUtil.sublist(orderIdList, i * 20, 20);
-            final String subOrderIdsStr = subOrderIds.stream().map(item -> String.format("\"%s\"", item)).collect(Collectors.joining(","));
-            final String jobParam = String.format("{\"orderIds\": [%s]}", subOrderIdsStr);
-            System.out.println(jobParam);
-        }
-
-        System.out.println(processSmsTxtAfterTktIssued("出票成功：04月16日中国国航CA1369，北京首都国际机场T3-三亚凤凰国际机场T2，07:45起飞，11:40到达，经济舱。旅客 洪仁满(999-9281090178)票价900.00元，民航发展基金50.00元，燃油费60.00元，旅客 李惠宁(999-9281090180)票价900.00元，民航发展基金50.00元，燃油费60.00元，旅客 李迪(999-9281090179)票价900.00元，民航发展基金50.00元，燃油费60.00元，旅客 闫梦瑶(999-9281090181)票价900.00元，民航发展基金50.00元，燃油费60.00元。手提行李限1件5KG以内且体积不超过20×40×55cm，免费托运行李20KG。客票的有效期为一年，已为您自动关注行程，后续可查看行程动态。建议提前2小时到达机场办理乘机手续，因各地机场截载时间不一致，请自行了解当地机场截载时间，避免误机，如需帮助请联系客服。如您接到航班变动或取消的信息，可通过航班管家客户端查询动态或联系客服核实，请勿拨打陌生电话。"));
-        System.out.println(processSmsTxtAfterTktIssued("出票成功：04月14日中国国航CA1563，北京首都国际机场T3-上海虹桥国际机场T2，19:30起飞，21:50到达，经济舱。旅客 杨扉(999-9148661040)。手提行李限1件5KG以内且体积不超过20×40×55cm，免费托运行李20KG。客票的有效期为一年，已为您自动关注行程，后续可查看行程动态。建议提前2小时到达机场办理乘机手续，因各地机场截载时间不一致，请自行了解当地机场截载时间，避免误机，如需帮助请联系客服。如您接到航班变动或取消的信息，可通过航班管家客户端查询动态或联系客服核实，请勿拨打陌生电话。"));
-
-        final List<String> hotelBizAttrs = Arrays.asList(StringUtils.split("applyOrderNo, applyUser, arrearsPay, arrivalCityId, arrivalDate, assumeDept, assumeOrg, bxStatus, canceledFee, checkInDate, checkOutDate, cityName, companion, companionId, companyRealRefund, contactMobile, contactName, createBy, currency, deductibleTax, departureCityId, departureDate, enterprisePayment, extraCharge, hotelAddress, hotelCity, hotelCityId, hotelCityName, hotelName, hotelStars, inDays, inNights, insertTime, invoiceType, latestArrivalTime, noTaxAmount, note, orderDetailId, orderNo, orderStatus, orderType, payType, paymentPrice, paymentType, personNum, personPayment, personRealRefund, preferentialAmount, proposerId, proposerName, proposerPhone, publicOrPrivate, refundableAmount, roomNums, roomType, serviceFee, singleNightPrice, singleTotalPrice, sourceType, supplier, taxRate, taxableAmount, userId, userName, userPhone"));
-        final List<String> dftBizAttrs = Arrays.asList(StringUtils.split("actualPrice, applyOrderNo, applyUser, arrearsPay, arrivalCityId, arrivalDate, arrivalTime, assumeDept, assumeOrg, boardAirportName, boardPointAirPortName, boardPointName, carrierName, changeFee, companion, companionId, companyRealRefund, constructionPrice, costProject, createBy, createDate, currency, deductibleTax, departureCityId, departureDate, departureTime, entPayFee, extServiceFee, flightNo, fromCityName, insuranceFee, isDomc, noTaxAmount, offAirportName, offPointAirPortName, offPointName, oilfee, orderDetailId, orderNo, orderStatus, orderTime, orderType, originalOrderNo, parentOrderNo, payType, paymentPrice, paymentType, personPayFee, personRealRefund, personalTaxExpenses, phone, positionLevel, preferentialAmount, proposerId, proposerName, proposerPhone, publicOrPrivate, rebookServiceFee, refundFee, refundServiceFee, refundableAmount, relatedType, salesPrice, serviceFee, sourceType, supplier, taxRate, taxableAmount, ticketNo, timeSpan, toCityName, toDate, toTime, userId, userName, userPhone"));
-
-        final List<String> intersection = Arrays.asList("applyOrderNo,","applyUser,","arrearsPay,","arrivalCityId,","arrivalDate,","assumeDept,","assumeOrg,","companion,","companionId,","companyRealRefund,","createBy,","currency,","deductibleTax,","departureCityId,","departureDate,","noTaxAmount,","orderDetailId,","orderNo,","orderStatus,","orderType,","payType,","paymentPrice,","paymentType,","personRealRefund,","preferentialAmount,","proposerId,","proposerName,","proposerPhone,","publicOrPrivate,","refundableAmount,","serviceFee,","sourceType,","supplier,","taxRate,","taxableAmount,","userId,","userName,","userPhone");
-        System.out.println(JsonUtil.toJsonStr(DeiCollectionUtil.getDifference(hotelBizAttrs, intersection)));
-
-
-        System.out.println("       四川龙翔旅业.   服务有.  限责任公司".replaceAll("\\s+", ""));
-    }
-
-    private static String processSmsTxtAfterTktIssued(final String smsTxt) {
-        final Pattern patterOfTktNo = Pattern.compile("(\\d{3}-\\d{10})|(\\d{13})");
-        final Matcher tktNoMatter = patterOfTktNo.matcher(smsTxt);
-        String tktNo = null;
-        String processedSmsTxt = smsTxt;
-        while (tktNoMatter.find()) {
-            tktNo = tktNoMatter.group();
-        }
-        if (StringUtils.isNotBlank(tktNo)) {
-            final String tktNoPortion = String.format("(%s)", tktNo);
-            final String anotherTktNoPortion = String.format("（%s）", tktNo);
-            if (StringUtils.contains(smsTxt, tktNoPortion)) {
-                processedSmsTxt = String.format("%s。", StringUtils.substring(smsTxt, 0, StringUtils.indexOf(smsTxt, tktNoPortion) + tktNoPortion.length()));
-            } else if (StringUtils.contains(smsTxt, anotherTktNoPortion)) {
-                processedSmsTxt = String.format("%s。", StringUtils.substring(smsTxt, 0, StringUtils.indexOf(smsTxt, anotherTktNoPortion) + anotherTktNoPortion.length()));
-            }
-        }
-        return processedSmsTxt;
     }
 }

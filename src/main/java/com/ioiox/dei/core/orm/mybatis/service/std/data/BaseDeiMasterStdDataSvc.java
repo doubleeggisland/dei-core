@@ -68,7 +68,7 @@ public abstract class BaseDeiMasterStdDataSvc<
 
     public abstract E toUpdatableObj(final O updatableVO);
 
-    protected void assembleCommonAttrs(final BaseDeiEntity example, final UpdatableObj updatableObj) {
+    protected void assembleCommonUpdatableAttrs(final BaseDeiEntity example, final UpdatableObj updatableObj) {
         if (Objects.nonNull(updatableObj.getLastModifiedTime())) {
             example.setUpdatedTime(updatableObj.getLastModifiedTime());
         }
