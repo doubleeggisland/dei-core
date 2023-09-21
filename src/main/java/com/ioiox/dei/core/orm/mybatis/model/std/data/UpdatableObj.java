@@ -47,7 +47,7 @@ public abstract class UpdatableObj {
     }
 
     public static <T> boolean modified(final T oldVal, final T newVal) {
-        return !Objects.equals(oldVal, newVal);
+        return Objects.nonNull(newVal) && !Objects.equals(oldVal, newVal);
     }
 
     public static <T> boolean modified(final List<T> oldVal, final List<T> newVal) {
